@@ -43,6 +43,7 @@ spec:
         - --graphql-port=23061
         - --no-cors
         - --chain-tip-stale-behavior-type=reboot
+        - --tx-life-time=60
         command:
         - dotnet
         image: kustomization-onboarding-headless
