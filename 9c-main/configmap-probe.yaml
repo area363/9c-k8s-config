@@ -34,8 +34,8 @@ data:
         | jq -r '.data.chainQuery.blockQuery.blocks[0].index'
       )"
       echo $miner_tip
-      echo [[ $(( miner_tip - local_tip)) -lt 20 ]]
-      [[ $(( miner_tip - local_tip)) -lt 20 ]]
+      echo [[ $(( miner_tip - local_tip)) -lt 10 ]]
+      [[ $(( miner_tip - local_tip)) -lt 10 ]]
     fi
   readiness_probe.sh: |-
     #!/usr/bin/env bash

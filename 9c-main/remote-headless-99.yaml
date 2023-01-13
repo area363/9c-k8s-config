@@ -58,6 +58,7 @@ spec:
         - --chain-tip-stale-behavior-type=reboot
         - --sentry-dsn=https://625a444555a547e8822ee86d4f38f046@o195672.ingest.sentry.io/6197051
         - --sentry-trace-sample-rate=0.05
+        - --tx-life-time=60
         command:
         - dotnet
         image: planetariumhq/ninechronicles-headless:v100351-1
@@ -66,7 +67,7 @@ spec:
           exec:
             command:
             - /bin/liveness_probe.sh
-          failureThreshold: 5
+          failureThreshold: 3
           initialDelaySeconds: 1800
           periodSeconds: 30
           timeoutSeconds: 30
@@ -131,7 +132,7 @@ spec:
           value: remote-headless-99
       dnsPolicy: ClusterFirst
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-main-c5-4xl
+        alpha.eksctl.io/nodegroup-name: 9c-main-m6g-2xl
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler
