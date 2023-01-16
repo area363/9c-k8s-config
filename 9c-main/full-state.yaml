@@ -60,6 +60,7 @@ spec:
         - --graphql-host=0.0.0.0
         - --graphql-port=80
         - --chain-tip-stale-behavior-type=reboot
+        - --tx-life-time=60
         command:
         - dotnet
         env:
@@ -74,7 +75,7 @@ spec:
           exec:
             command:
             - /bin/liveness_probe.sh
-          failureThreshold: 5
+          failureThreshold: 3
           initialDelaySeconds: 1800
           periodSeconds: 30
           timeoutSeconds: 30

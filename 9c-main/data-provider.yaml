@@ -49,6 +49,8 @@ spec:
           value: 030ffa9bd579ee1503ce008394f687c182279da913bfaec12baca34e79698a7cd1
         - name: NC_GenesisBlockPath
           value: https://release.nine-chronicles.com/genesis-block-9c-main
+        - name: NC_TxLifeTime
+          value: '60'
         - name: NC_MySqlConnectionString
           valueFrom:
             secretKeyRef:
@@ -66,7 +68,7 @@ spec:
               }' \\\n    http://localhost:80/graphql_headless \\\n  | jq -r '.data.chainQuery.blockQuery.blocks[0].timestamp'\n\
               )\"\nlast_timestamp=\"$(date +%s -u --date=\"$last_block\")\"\nnow=\"\
               $(date +%s -u)\"\n[[ $(( now - last_timestamp )) -lt 300 ]]\n"
-          failureThreshold: 5
+          failureThreshold: 3
           initialDelaySeconds: 600
           periodSeconds: 30
           timeoutSeconds: 30
