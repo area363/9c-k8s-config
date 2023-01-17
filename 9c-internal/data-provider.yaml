@@ -18,6 +18,42 @@ spec:
       labels:
         app: internal-data-provider
     spec:
+      initContainers:
+      - args:
+        - https://snapshots.nine-chronicles.com/internal
+        - /data/data-provider
+        - $(RESET_SNAPSHOT_OPTION)
+        - internal-data-provider
+        - $(SLACK_TOKEN)
+        command:
+        - /bin/download_snapshot.sh
+        image: bash:latest
+        name: reset-snapshot
+        volumeMounts:
+        - name: script-volume
+          mountPath: /bin/download_snapshot.sh
+          readOnly: true
+          subPath: download_snapshot.sh
+        - mountPath: /data
+          name: internal-data-provider-data
+        env:
+        - name: RESET_SNAPSHOT_OPTION
+          valueFrom:
+            configMapKeyRef:
+              name: reset-snapshot-option
+              key: RESET_SNAPSHOT_OPTION
+        - name: SLACK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: slack
+              key: token
+      - args:
+        - sleep 60
+        command:
+        - /bin/sh
+        - -c
+        image: nginx
+        name: wait-for-miner
       containers:
       - args:
         - /bin/setup_internal_db.sh "$(NC_MySqlConnectionString)" $(RESET_SNAPSHOT_OPTION)
