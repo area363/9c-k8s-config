@@ -86,7 +86,6 @@ jobs:
           mkdir signed
 
           mv output/${{ github.event.inputs.network }}/*/launcher/*/Nine\ Chronicles.exe unsigned/Nine\ Chronicles.exe
-          mv output/${{ github.event.inputs.network }}/*/launcher/*/resources/app/publish/NineChronicles.Headless.Executable.exe unsigned/NineChronicles.Headless.Executable.exe
           mv output/${{ github.event.inputs.network }}/*/player/*/9c.exe unsigned/9c.exe
         working-directory: py-scripts
 
@@ -107,7 +106,6 @@ jobs:
         shell: bash
         run: |
           cp signed/Nine\ Chronicles.exe output/${{ github.event.inputs.network }}/*/launcher/*/
-          cp signed/NineChronicles.Headless.Executable.exe output/${{ github.event.inputs.network }}/*/launcher/*/resources/app/publish/
 
           cd output/${{ github.event.inputs.network }}/*/launcher/*/
           zip -r Windows.zip .
