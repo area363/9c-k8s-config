@@ -72,13 +72,7 @@ spec:
         livenessProbe:
           exec:
             command:
-            - /bin/bash
-            - -c
-            - "set -e\nlast_block=\"$(\n  curl \\\n    -H 'Content-Type: application/json'\
-              \ \\\n    --data '{\"query\":\"query{chainQuery{blockQuery{blocks(desc:true,limit:1){timestamp}}}}\"\
-              }' \\\n    http://localhost:80/graphql \\\n  | jq -r '.data.chainQuery.blockQuery.blocks[0].timestamp'\n\
-              )\"\nlast_timestamp=\"$(date +%s -u --date=\"$last_block\")\"\nnow=\"\
-              $(date +%s -u)\"\n[[ $(( now - last_timestamp )) -lt 100 ]]\n"
+            - /bin/liveness_probe_miner.sh
           failureThreshold: 3
           initialDelaySeconds: 1800
           periodSeconds: 30
@@ -93,6 +87,10 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: main-miner-2-data
+        - mountPath: /bin/liveness_probe_miner.sh
+          name: probe-script
+          readOnly: true
+          subPath: liveness_probe_miner.sh
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: acr-regcred
@@ -103,6 +101,11 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 448
+          name: probe-script
+        name: probe-script
   updateStrategy:
     type: OnDelete
   volumeClaimTemplates:
