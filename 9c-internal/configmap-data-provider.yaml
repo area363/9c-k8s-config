@@ -59,5 +59,4 @@ data:
     then
       cd /app/NineChronicles.DataProvider/NineChronicles.DataProvider.Executable
       dotnet ef database update -- $NC_MySqlConnectionString
-      fi
     fi
