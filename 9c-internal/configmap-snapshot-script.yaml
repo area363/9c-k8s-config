@@ -81,7 +81,7 @@ data:
             rm "$snapshot_zip_filename"
         done
 
-        aria2c "$base_url/$mainnet_snapshot_json_filename" -o "$save_dir/$mainnet_snapshot_json_filename" -j10 -x10 --continue=true
+        aria2c "$base_url/$mainnet_snapshot_json_filename" -d "$save_dir" -o "$mainnet_snapshot_json_filename" -j10 -x10 --continue=true
       }
 
       function download_unzip_full_snapshot() {
@@ -131,7 +131,7 @@ data:
               rm "$snapshot_zip_filename"
           done
 
-          aria2c "$base_url/$mainnet_snapshot_json_filename" -o "$save_dir/$mainnet_snapshot_json_filename" -j10 -x10 --continue=true
+          aria2c "$base_url/$mainnet_snapshot_json_filename" -d "$save_dir" -o "$mainnet_snapshot_json_filename" -j10 -x10 --continue=true
       }
 
       if [ -f $save_dir/mainnet_latest.json ]
