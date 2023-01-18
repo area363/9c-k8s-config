@@ -85,17 +85,13 @@ reset_snapshot() {
     MAIN_PREFIX=$(echo $2/ | awk '{gsub(/\//,"\\/");print}')
 
     # archive internal cluster chain
-    for f in $(aws s3 ls $1/ | awk 'NF>1{print $4}' | grep "zip\|json"); do
-      echo $f
-      aws s3 mv $(echo $f | sed "s/.*/$INTERNAL_PREFIX&/") $(echo $f | sed "s/.*/$ARCHIVE_PREFIX&/")
-    done
+    aws s3 ls $1/ | awk 'NF>1{print $4}' | grep "zip\|json" | \
+      xargs -P0 -I@ sh -c 'echo @; aws s3 mv $(echo @ | sed "s/.*/$INTERNAL_PREFIX&/") $(echo @ | sed "s/.*/$ARCHIVE_PREFIX&/")'
 
     # copy main cluster chain to internal (copy state_latest.zip first)
     aws s3 cp "$2/state_latest.zip" "$1/state_latest.zip"
-    for f in $(aws s3 ls $2/ | sort -k1,2 | sort -r | awk 'NF>1{print $4}' | grep "zip\|json" | grep -v "state_latest.zip"); do
-      echo $f
-      aws s3 cp $(echo $f | sed "s/.*/$MAIN_PREFIX&/") $(echo $f | sed "s/.*/$INTERNAL_PREFIX&/")
-    done
+    aws s3 ls $2/ | sort -k1,2 | sort -r | awk 'NF>1{print $4}' | grep "zip\|json" | grep -v "state_latest.zip" | \
+      xargs -P0 -I@ sh -c 'echo @; aws s3 cp $(echo @ | sed "s/.*/$MAIN_PREFIX&/") $(echo @ | sed "s/.*/$INTERNAL_PREFIX&/")'
 
     aws s3 cp "$1/latest.json" "$1/mainnet_latest.json"
 
