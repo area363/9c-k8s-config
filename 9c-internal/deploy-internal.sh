@@ -11,12 +11,12 @@ checkout_internal_cluster() {
 }
 
 clear_cluster() {
-  curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Clearing 9c-internal cluster."}' '$1'
+  curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Clearing 9c-internal cluster."}' $1
   kubectl delete -k $BASEDIR
 }
 
 clean_db() {
-  curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Cleaning DP & Onboarding DB."}' '$1'
+  curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Cleaning DP & Onboarding DB."}' $1
   kubectl delete pvc internal-data-provider-db-data-internal-data-provider-db-0 internal-onboarding-db-data-internal-onboarding-db-0
 }
 
@@ -74,10 +74,10 @@ reset_snapshot() {
         done
     }
 
-    curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Copying 9c-main snapshots to 9c-internal."}' '$3'
+    curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Copying 9c-main snapshots to 9c-internal."}' $3
     copy_snapshot $1 $2
   else
-    curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Copying 9c-main snapshots to 9c-internal."}' '$3'
+    curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Copying 9c-main snapshots to 9c-internal."}' $3
     ARCHIVE="archive_"$(date '+%Y%m%d%H')
     INTERNAL_PREFIX=$(echo $1/ | awk '{gsub(/\//,"\\/");print}')
     ARCHIVE_PATH=$1/$ARCHIVE/
@@ -85,13 +85,17 @@ reset_snapshot() {
     MAIN_PREFIX=$(echo $2/ | awk '{gsub(/\//,"\\/");print}')
 
     # archive internal cluster chain
-    aws s3 ls $1/ | awk 'NF>1{print $4}' | grep "zip\|json" | \
-      xargs -P0 -I@ sh -c 'echo @; aws s3 mv $(echo @ | sed "s/.*/$INTERNAL_PREFIX&/") $(echo @ | sed "s/.*/$ARCHIVE_PREFIX&/")'
+    for f in $(aws s3 ls $1/ | awk 'NF>1{print $4}' | grep "zip\|json"); do
+      echo $f
+      aws s3 mv $(echo $f | sed "s/.*/$INTERNAL_PREFIX&/") $(echo $f | sed "s/.*/$ARCHIVE_PREFIX&/")
+    done
 
     # copy main cluster chain to internal (copy state_latest.zip first)
     aws s3 cp "$2/state_latest.zip" "$1/state_latest.zip"
-    aws s3 ls $2/ | sort -k1,2 | sort -r | awk 'NF>1{print $4}' | grep "zip\|json" | grep -v "state_latest.zip" | \
-      xargs -P0 -I@ sh -c 'echo @; aws s3 cp $(echo @ | sed "s/.*/$MAIN_PREFIX&/") $(echo @ | sed "s/.*/$INTERNAL_PREFIX&/")'
+    for f in $(aws s3 ls $2/ | sort -k1,2 | sort -r | awk 'NF>1{print $4}' | grep "zip\|json" | grep -v "state_latest.zip"); do
+      echo $f
+      aws s3 cp $(echo $f | sed "s/.*/$MAIN_PREFIX&/") $(echo $f | sed "s/.*/$INTERNAL_PREFIX&/")
+    done
 
     aws s3 cp "$1/latest.json" "$1/mainnet_latest.json"
 
@@ -107,7 +111,7 @@ reset_snapshot() {
 }
 
 deploy_cluster() {
-  curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Deploying 9c-internal cluster."}' '$1'
+  curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Deploying 9c-internal cluster."}' $1
   kubectl apply -f $BASEDIR/configmap-versions.yaml
   kubectl apply -f $BASEDIR/configmap-snapshot-script.yaml
   kubectl apply -f $BASEDIR/configmap-data-provider.yaml
@@ -127,12 +131,12 @@ clear_cluster $slack_webhook_url || true
 if [ $response = y ]
 then
     echo "Reset cluster with a new snapshot"
-    curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Reset cluster with a new snapshot"}' '$slack_webhook_url'
+    curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Reset cluster with a new snapshot"}' $slack_webhook_url
     clean_db $slack_webhook_url || true
     reset_snapshot "s3://9c-snapshots/internal" "s3://9c-snapshots/main/partition/internal" $slack_webhook_url || true
 else
     echo "Reset cluster without resetting snapshot."
-    curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Reset cluster without resetting snapshot."}' '$slack_webhook_url'
+    curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Reset cluster without resetting snapshot."}' $slack_webhook_url
 fi
 
 kubectl delete configmap reset-snapshot-option
