@@ -49,7 +49,6 @@ spec:
       - args:
         - NineChronicles.Headless.Executable.dll
         - run
-        - --workers=500
         - --app-protocol-version=$(APP_PROTOCOL_VERSION_KEY)
         - --trusted-app-protocol-version-signer=02529a61b9002ba8f21c858224234af971e962cac9bd7e6b365e71e125c6463478
         - --genesis-block-path=https://release.nine-chronicles.com/genesis-block-9c-main

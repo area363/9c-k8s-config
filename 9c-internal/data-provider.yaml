@@ -85,8 +85,6 @@ spec:
           value: https://release.nine-chronicles.com/genesis-block-9c-main
         - name: NC_TrustedAppProtocolVersionSigners
           value: 02529a61b9002ba8f21c858224234af971e962cac9bd7e6b365e71e125c6463478
-        - name: NC_Host
-          value: aa593acc9585245a29756fc95e039875-2006679655.us-east-2.elb.amazonaws.com
         - name: NC_PORT
           value: '31234'
         - name: NC_NetworkType
