@@ -113,5 +113,5 @@ spec:
           - name: aws-keys
             secret:
               secretName: aws-keys
-  schedule: 30 */6 * * *
+  schedule: 30 0 * * *
   successfulJobsHistoryLimit: 1

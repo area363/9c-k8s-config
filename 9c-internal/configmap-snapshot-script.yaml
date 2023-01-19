@@ -200,7 +200,6 @@ data:
       chmod 777 -R "$STORE_PATH"
 
       "$HEADLESS" \
-          --workers=50 \
           --no-miner \
           --genesis-block-path="$GENESIS_BLOCK_PATH" \
           --store-type=rocksdb \
