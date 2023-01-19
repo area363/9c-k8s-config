@@ -42,5 +42,5 @@ spec:
         resources:
           requests:
             storage: 1Gi
-        storageClassName: gp2-extensible
+        storageClassName: gp3
         volumeMode: Filesystem

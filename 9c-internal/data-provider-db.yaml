@@ -39,6 +39,6 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 100Gi
-        storageClassName: gp2-extensible-us-east-2c
+            storage: 10Gi
+        storageClassName: gp3
         volumeMode: Filesystem
