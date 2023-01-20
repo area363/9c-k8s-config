@@ -123,7 +123,7 @@ echo "Do you want to reset the cluster with a new snapshot(y/n)?"
 read response
 
 checkout_internal_cluster || true
-slack_webhook_url=$(kubectl get secrets/slack  --template='{{.data.token | base64decode}}')
+slack_webhook_url=$(kubectl get secrets/slack  --template='{{.data.slack-webhook-url | base64decode}}')
 echo $slack_webhook_url
 
 clear_cluster $slack_webhook_url || true
