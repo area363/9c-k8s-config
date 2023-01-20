@@ -15,14 +15,14 @@ data:
     save_dir=${2:-"9c-main-snapshot_$(date +%Y%m%d_%H)"}
     download_option=$3
     service_name=$4
-    slack_token=$5
+    SLACK_WEBHOOK=$5
 
     if [ $download_option = y ]
     then
       echo "Start download snapshot"
       if [ $service_name != "snapshot" ]
       then
-        curl --data "[K8S] Start snapshot download in $service_name. Please wait." "https://planetariumhq.slack.com/services/hooks/slackbot?token=$slack_token&channel=%239c-internal"
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Start snapshot download in $service_name. Please wait."}' $SLACK_WEBHOOK
       fi
       # strip tailing slash
       base_url=${base_url%/}
@@ -146,13 +146,13 @@ data:
       echo "$save_dir"
       if [ $service_name != "snapshot" ]
       then
-        curl --data "[K8S] Snapshot download complete in $service_name. Pod Starting." "https://planetariumhq.slack.com/services/hooks/slackbot?token=$slack_token&channel=%239c-internal"
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Snapshot download complete in $service_name. Pod Starting."}' $SLACK_WEBHOOK
       fi
     else
       echo "Skip download snapshot"
       if [ $service_name != "snapshot" ]
       then
-        curl --data "[K8S] Skip snapshot download in $service_name. Pod Starting." "https://planetariumhq.slack.com/services/hooks/slackbot?token=$slack_token&channel=%239c-internal"
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Skip snapshot download in $service_name. Pod Starting."}' $SLACK_WEBHOOK
       fi
     fi
   preload_headless.sh: |-
@@ -165,7 +165,7 @@ data:
     HOME="/app"
 
     APP_PROTOCOL_VERSION=$1
-    slack_token=$2
+    SLACK_WEBHOOK=$2
     VERSION_NUMBER="${APP_PROTOCOL_VERSION:0:4}"
     GENESIS_BLOCK_PATH="https://release.nine-chronicles.com/genesis-block-9c-main"
     STORE_PATH="/data/headless"
@@ -182,7 +182,7 @@ data:
     PID_FILE="$HOME/headless_pid"
     function senderr() {
       echo "$1"
-      curl --data "[K8S] $1. Check snapshot-v$VERSION_NUMBER in 9c-internal cluster at preload_headless.sh." "https://planetariumhq.slack.com/services/hooks/slackbot?token=$slack_token&channel=%239c-internal"
+      curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] $1. Check snapshot-v$VERSION_NUMBER in 9c-internal cluster at preload_headless.sh."}' $SLACK_WEBHOOK
     }
 
     function preload_complete() {
@@ -281,12 +281,12 @@ data:
 
     HOME="/app"
     STORE_PATH="/data/headless"
-    SLACK_TOKEN=$2
+    SLACK_WEBHOOK=$2
     CF_DISTRIBUTION_ID=$3
 
     function senderr() {
       echo "$1"
-      curl --data "[K8S] $1. Check snapshot in 9c-internal cluster at upload_snapshot.sh." "https://planetariumhq.slack.com/services/hooks/slackbot?token=$2&channel=%239c-internal"
+      curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] $1. Check snapshot in 9c-internal cluster at upload_snapshot.sh."}' $2
     }
 
     function make_and_upload_snapshot() {
