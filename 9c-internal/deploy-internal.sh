@@ -16,8 +16,8 @@ clear_cluster() {
 }
 
 clean_db() {
-  curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Cleaning DP & Onboarding DB."}' $1
-  kubectl delete pvc internal-data-provider-db-data-internal-data-provider-db-0 internal-onboarding-db-data-internal-onboarding-db-0
+  curl -X POST -H 'Content-type: application/json' --data '{"text":"[K8S] Cleaning DP DB."}' $1
+  kubectl delete pvc internal-data-provider-db-data-internal-data-provider-db-0
 }
 
 # AWS configuration must be already set on your environment

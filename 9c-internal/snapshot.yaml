@@ -37,7 +37,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: slack
-                  key: token
+                  key: snapshot-token
           - name: preload-headless
             image: kustomization-ninechronicles-headless
             args:
@@ -55,7 +55,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: slack
-                  key: token
+                  key: snapshot-token
             volumeMounts:
             - name: script-volume
               mountPath: /bin/preload_headless.sh
@@ -82,7 +82,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: slack
-                  key: token
+                  key: snapshot-token
             - name: CF_DISTRIBUTION_ID
               valueFrom:
                 secretKeyRef:
@@ -99,7 +99,7 @@ spec:
               mountPath: /secret
               readOnly: true
           nodeSelector:
-            alpha.eksctl.io/nodegroup-name: 9c-internal-xl
+            alpha.eksctl.io/nodegroup-name: 9c-internal-2xl
             beta.kubernetes.io/os: linux
           restartPolicy: OnFailure
           volumes:

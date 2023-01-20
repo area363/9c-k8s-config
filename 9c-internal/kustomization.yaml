@@ -11,17 +11,11 @@ images:
 - name: kustomization-ninechronicles-dataprovider
   newName: planetariumhq/ninechronicles-dataprovider
   newTag: git-a737935e9507bc932e27603c05facb552decfd7c
-- name: kustomization-ninechronicles-onboarding
-  newName: planetariumhq/9c-onboarding
-  newTag: git-36b2b5ca12e6bd059a81c17f92cb2803b38425bc
 resources:
 - explorer.yaml
 - miner-1.yaml
 - remote-headless-1.yaml
 - data-provider.yaml
 - data-provider-db.yaml
-- onboarding-app.yaml
-- onboarding-db.yaml
-- onboarding-redis.yaml
 - snapshot.yaml
 - tcp-seed-deployment.yaml
