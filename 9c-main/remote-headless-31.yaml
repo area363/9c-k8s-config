@@ -39,7 +39,7 @@ spec:
         - --port=31234
         - --no-miner
         - --store-type=rocksdb
-        - --store-path=/data/headless-arm
+        - --store-path=/data/headless
         - --host=rpc-for-snapshot.nine-chronicles.com
         - --peer
         - 027bd36895d68681290e570692ad3736750ceaab37be402442ffb203967f98f7b6,9c-main-tcp-seed-1.planetarium.dev,31234
@@ -98,8 +98,6 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: remote-headless-31-data
-        - mountPath: /app/logs
-          name: remote-headless-31-logs
         - mountPath: /bin/liveness_probe.sh
           name: probe-script
           readOnly: true
@@ -153,15 +151,5 @@ spec:
       resources:
         requests:
           storage: 1000Gi
-      storageClassName: gp2-extensible-us-east-2b
-      volumeMode: Filesystem
-  - metadata:
-      name: remote-headless-31-logs
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 10Gi
       storageClassName: gp3-extensible
       volumeMode: Filesystem

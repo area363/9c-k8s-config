@@ -123,5 +123,5 @@ spec:
       resources:
         requests:
           storage: 1000Gi
-      storageClassName: gp2-extensible
+      storageClassName: gp3-extensible
       volumeMode: Filesystem

@@ -98,8 +98,6 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: remote-headless-99-data
-        - mountPath: /app/logs
-          name: remote-headless-99-logs
         - mountPath: /bin/liveness_probe.sh
           name: probe-script
           readOnly: true
@@ -153,15 +151,5 @@ spec:
       resources:
         requests:
           storage: 1000Gi
-      storageClassName: gp2-extensible-us-east-2b
-      volumeMode: Filesystem
-  - metadata:
-      name: remote-headless-99-logs
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 10Gi
-      storageClassName: gp2-extensible-us-east-2b
+      storageClassName: gp3-extensible
       volumeMode: Filesystem
