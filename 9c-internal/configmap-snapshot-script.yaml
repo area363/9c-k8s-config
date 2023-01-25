@@ -231,7 +231,7 @@ data:
         exit 1
       fi
 
-      if timeout 1800 tail -f "$HEADLESS_LOG" | grep -m1 "CompleteBlocksAsync finished;"; then
+      if timeout 1800 tail -f "$HEADLESS_LOG" | grep -m1 "preloading is no longer needed"; then
         sleep 30
       else
         senderr "grep failed. Failed to preload." $1
@@ -246,7 +246,7 @@ data:
       if ! kill -0 "$PID"; then
         echo "$PID doesn't exist. Failed to kill headless"
       else
-        kill -KILL "$PID"
+        kill "$PID"
         waitpid "$PID" || true
         chmod 777 -R "$STORE_PATH"
       fi
