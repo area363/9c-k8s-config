@@ -69,9 +69,10 @@ spec:
           name: world-boss-service
           ports:
             - containerPort: 5000
+      nodeSelector:
+        alpha.eksctl.io/nodegroup-name: 9c-onboarding
+        beta.kubernetes.io/os: linux
       restartPolicy: Always
-      imagePullSecrets:
-        - name: regcred
       serviceAccount: aws-iam-role
       serviceAccountName: aws-iam-role
   updateStrategy:
