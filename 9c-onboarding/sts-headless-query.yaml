@@ -103,7 +103,7 @@ spec:
           subPath: probe_tip.sh
       dnsPolicy: ClusterFirst
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-onboarding-m6g-2xl
+        alpha.eksctl.io/nodegroup-name: 9c-onboarding-r6g-xl
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler

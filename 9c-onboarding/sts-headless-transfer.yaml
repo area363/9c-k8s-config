@@ -107,7 +107,7 @@ spec:
           subPath: probe_tip_diff.sh
       dnsPolicy: ClusterFirst
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-onboarding-m5-xl
+        alpha.eksctl.io/nodegroup-name: 9c-onboarding
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler
