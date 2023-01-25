@@ -37,7 +37,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: slack
-                  key: snapshot-token
+                  key: slack_webhook_url
           - name: preload-headless
             image: kustomization-ninechronicles-headless
             args:
@@ -55,7 +55,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: slack
-                  key: snapshot-token
+                  key: slack_webhook_url
             volumeMounts:
             - name: script-volume
               mountPath: /bin/preload_headless.sh
@@ -70,6 +70,7 @@ spec:
             - $(APP_PROTOCOL_VERSION_KEY)
             - $(SLACK_TOKEN)
             - $(CF_DISTRIBUTION_ID)
+            - $(SNAPSHOT_SLACK_TOKEN)
             command:
             - /bin/upload_snapshot.sh
             env:
@@ -82,12 +83,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: slack
-                  key: snapshot-token
+                  key: slack_webhook_url
             - name: CF_DISTRIBUTION_ID
               valueFrom:
                 secretKeyRef:
                   name: aws-keys
                   key: cf_distribution_id
+            - name: SNAPSHOT_SLACK_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: slack
+                  key: snapshot-token
             volumeMounts:
             - name: script-volume
               mountPath: /bin/upload_snapshot.sh

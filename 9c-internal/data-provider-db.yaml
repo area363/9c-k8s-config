@@ -30,6 +30,9 @@ spec:
             - mountPath: /var/lib/mysql
               name: internal-data-provider-db-data
       restartPolicy: Always
+      nodeSelector:
+        alpha.eksctl.io/nodegroup-name: 9c-internal
+        beta.kubernetes.io/os: linux
   volumeClaimTemplates:
     - metadata:
         creationTimestamp: null

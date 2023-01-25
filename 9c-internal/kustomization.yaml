@@ -10,7 +10,7 @@ images:
   newTag: git-4f703fcd89e40e8b5b5a59be8060e0524a18e17e
 - name: kustomization-ninechronicles-dataprovider
   newName: planetariumhq/ninechronicles-dataprovider
-  newTag: git-a737935e9507bc932e27603c05facb552decfd7c
+  newTag: git-0d3c0f5356f604a430f34d3359c35361af3dce62
 resources:
 - explorer.yaml
 - miner-1.yaml
