@@ -102,7 +102,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: slack
-              key: token
+              key: slack_webhook_url
       - args:
         - sleep 60
         command:

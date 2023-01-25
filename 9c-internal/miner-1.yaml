@@ -44,7 +44,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: slack
-              key: token
+              key: slack_webhook_url
       containers:
       - args:
         - NineChronicles.Headless.Executable.dll

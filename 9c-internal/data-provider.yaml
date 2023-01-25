@@ -46,7 +46,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: slack
-              key: token
+              key: slack_webhook_url
       - args:
         - sleep 60
         command:
@@ -165,6 +165,9 @@ spec:
         - mountPath: /data
           name: internal-data-provider-data
       dnsPolicy: ClusterFirst
+      nodeSelector:
+        alpha.eksctl.io/nodegroup-name: 9c-internal
+        beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
