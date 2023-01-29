@@ -26,7 +26,7 @@ spec:
               readOnly: true
               subPath: replace_snapshot.sh
             - mountPath: /data
-              name: snapshot-volume-reset
+              name: snapshot-volume-full
             - mountPath: /secret
               name: aws-keys
               readOnly: true
@@ -43,54 +43,13 @@ spec:
                   key: cf_distribution_id
           initContainers:
           - args:
-            - rm -r /data/headless/* || true && apt-get update && apt-get install -y
-              curl && apt-get install -y zip && curl "https://snapshots.nine-chronicles.com/main/partition/full/9c-main-snapshot.zip"
-              -o /data/snapshot.zip && unzip /data/snapshot.zip -d /data/headless &&
-              chmod -R 777 /data/headless/
-            command:
-            - /bin/sh
-            - -c
-            image: nginx
-            name: reset-snapshot
-            volumeMounts:
-            - mountPath: /data
-              name: snapshot-volume-reset
-          - args:
-            - $(APP_PROTOCOL_VERSION_KEY)
-            - $(SLACK_TOKEN)
-            command:
-            - /bin/preload_headless.sh
-            image: planetariumhq/ninechronicles-headless:v100351-1
-            name: preload-headless1
-            volumeMounts:
-            - mountPath: /bin/preload_headless.sh
-              name: snapshot-script-partition-reset
-              readOnly: true
-              subPath: preload_headless.sh
-            - mountPath: /data
-              name: snapshot-volume-reset
-            - mountPath: /secret
-              name: aws-keys
-              readOnly: true
-            env:
-            - name: SLACK_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: slack-token
-                  key: token
-            - name: APP_PROTOCOL_VERSION_KEY
-              valueFrom:
-                configMapKeyRef:
-                  name: version-config
-                  key: APP_PROTOCOL_VERSION
-          - args:
             - temp
             - $(APP_PROTOCOL_VERSION_KEY)
             - $(SLACK_TOKEN)
             - $(CF_DISTRIBUTION_ID)
             command:
             - /bin/upload_snapshot.sh
-            image: planetariumhq/ninechronicles-snapshot:git-4f703fcd89e40e8b5b5a59be8060e0524a18e17e
+            image: planetariumhq/ninechronicles-snapshot:git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
             name: upload-snapshot1
             volumeMounts:
             - mountPath: /bin/upload_snapshot.sh
@@ -98,7 +57,7 @@ spec:
               readOnly: true
               subPath: upload_snapshot.sh
             - mountPath: /data
-              name: snapshot-volume-reset
+              name: snapshot-volume-full
             - mountPath: /secret
               name: aws-keys
               readOnly: true
@@ -119,41 +78,13 @@ spec:
                   name: aws-keys
                   key: cf_distribution_id
           - args:
-            - $(APP_PROTOCOL_VERSION_KEY)
-            - $(SLACK_TOKEN)
-            command:
-            - /bin/preload_headless.sh
-            image: planetariumhq/ninechronicles-headless:v100351-1
-            name: preload-headless2
-            volumeMounts:
-            - mountPath: /bin/preload_headless.sh
-              name: snapshot-script-partition-reset
-              readOnly: true
-              subPath: preload_headless.sh
-            - mountPath: /data
-              name: snapshot-volume-reset
-            - mountPath: /secret
-              name: aws-keys
-              readOnly: true
-            env:
-            - name: SLACK_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: slack-token
-                  key: token
-            - name: APP_PROTOCOL_VERSION_KEY
-              valueFrom:
-                configMapKeyRef:
-                  name: version-config
-                  key: APP_PROTOCOL_VERSION
-          - args:
             - temp
             - $(APP_PROTOCOL_VERSION_KEY)
             - $(SLACK_TOKEN)
             - $(CF_DISTRIBUTION_ID)
             command:
             - /bin/upload_snapshot.sh
-            image: planetariumhq/ninechronicles-snapshot:git-4f703fcd89e40e8b5b5a59be8060e0524a18e17e
+            image: planetariumhq/ninechronicles-snapshot:git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
             name: upload-snapshot2
             volumeMounts:
             - mountPath: /bin/upload_snapshot.sh
@@ -161,7 +92,7 @@ spec:
               readOnly: true
               subPath: upload_snapshot.sh
             - mountPath: /data
-              name: snapshot-volume-reset
+              name: snapshot-volume-full
             - mountPath: /secret
               name: aws-keys
               readOnly: true
@@ -190,11 +121,11 @@ spec:
               defaultMode: 448
               name: snapshot-script-partition-reset
             name: snapshot-script-partition-reset
-          - name: snapshot-volume-reset
+          - name: snapshot-volume-full
             persistentVolumeClaim:
-              claimName: snapshot-volume-reset
+              claimName: snapshot-volume-full
           - name: aws-keys
             secret:
               secretName: aws-keys
-  schedule: 0 0 1,15 * *
+  schedule: 0 3 1,15 * *
   successfulJobsHistoryLimit: 1

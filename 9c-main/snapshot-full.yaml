@@ -17,7 +17,7 @@ spec:
             - $(CF_DISTRIBUTION_ID)
             command:
             - /bin/upload_snapshot.sh
-            image: planetariumhq/ninechronicles-snapshot:git-88212493c8d4d7a5cbb7e597a2876cea34b56ac2
+            image: planetariumhq/ninechronicles-snapshot:git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
             name: upload-snapshot
             volumeMounts:
             - mountPath: /bin/upload_snapshot.sh
@@ -89,5 +89,5 @@ spec:
           - name: aws-keys
             secret:
               secretName: aws-keys
-  schedule: 30 */12 * * *
+  schedule: 0 */12 * * *
   successfulJobsHistoryLimit: 1
