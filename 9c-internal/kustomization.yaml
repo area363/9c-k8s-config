@@ -4,13 +4,13 @@ images:
   newTag: git-c984fa6e98016527e95fe9b50c39a2bf247bcfb6
 - name: kustomization-ninechronicles-headless
   newName: planetariumhq/ninechronicles-headless
-  newTag: git-798a9e7ebe93a20fefce8b091ae8c6eafd16c2c2
+  newTag: git-d7f8c388ace574e4f38dc85a9c20aa34fe1a75fd
 - name: kustomization-ninechronicles-snapshot
   newName: planetariumhq/ninechronicles-snapshot
   newTag: git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
 - name: kustomization-ninechronicles-dataprovider
   newName: planetariumhq/ninechronicles-dataprovider
-  newTag: git-e8c0313087d5a72858285345f989fa91abd4562f
+  newTag: git-72bab11ed7038d3e1d127237fa708ba302e8c9f5
 resources:
 - explorer.yaml
 - miner-1.yaml
