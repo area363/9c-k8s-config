@@ -26,7 +26,6 @@ spec:
         - --private-key=$(SEED_PRIVATE_KEY)
         - --graphql-host=0.0.0.0
         - --graphql-port=31237
-        - --workers=500
         command:
         - dotnet
         image: planetariumhq/libplanet-seed:git-c984fa6e98016527e95fe9b50c39a2bf247bcfb6
