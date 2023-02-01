@@ -87,7 +87,6 @@ def update_main_manifests(
     explorer = ["explorer.yaml"]
     full_state = ["full-state.yaml"]
     snapshot_full = ["snapshot-full.yaml"]
-    snapshot_partition_reset = ["snapshot-partition-reset.yaml"]
     snapshot_partition = ["snapshot-partition.yaml"]
     miners = [f"miner-{i}.yaml" for i in range(1, 5)]
     headlesses = [f"remote-headless-{i}.yaml" for i in range(1, 6)] + [
@@ -104,7 +103,6 @@ def update_main_manifests(
         + explorer
         + full_state
         + snapshot_full
-        + snapshot_partition_reset
         + snapshot_partition
         + seeds
         + data_provider

@@ -19,7 +19,6 @@ class ManifestManager:
 
     SNAPSHOT_FULL = r"snapshot-full\.yaml"
     SNAPSHOT_PARTITION = r"snapshot-partition\.yaml"
-    SNAPSHOT_PARTITION_RESET = r"snapshot-partition-reset\.yaml"
 
     TCP_SEED_DEPLOYMENT = r"tcp-seed-deployment-([0-9+])\.yaml"
     SEED_DEPLOYMENT = r"seed-deployment-([0-9+])\.yaml"
@@ -39,7 +38,6 @@ class ManifestManager:
             FULL_STATE,
             SNAPSHOT_FULL,
             SNAPSHOT_PARTITION,
-            SNAPSHOT_PARTITION_RESET,
             DATA_PROVIDER,
             DATA_PROVIDER_DB,
             TCP_SEED_DEPLOYMENT,
@@ -70,7 +68,6 @@ class ManifestManager:
             self.FULL_STATE: self.replace_full_state,
             self.SNAPSHOT_FULL: self.replace_snapshot_full,
             self.SNAPSHOT_PARTITION: self.replace_snapshot_partition,
-            self.SNAPSHOT_PARTITION_RESET: self.replace_snapshot_partition_reset,
             self.TCP_SEED_DEPLOYMENT: self.replace_tcp_seed,
             self.SEED_DEPLOYMENT: self.replace_seed,
             self.DATA_PROVIDER: self.replace_data_provider,
@@ -169,22 +166,6 @@ class ManifestManager:
             ] = self.get_headless_image()
 
             new_doc = yaml.safe_dump(doc, sort_keys=False)
-        return new_doc
-
-    def replace_snapshot_partition_reset(self) -> str:
-        filename = "snapshot-partition-reset.yaml"
-
-        with open(os.path.join(self.base_dir, filename)) as f:
-            doc = yaml.safe_load(f)
-
-            doc["spec"]["jobTemplate"]["spec"]["template"]["spec"]["initContainers"][1][
-                "image"
-            ] = self.get_headless_image()
-            doc["spec"]["jobTemplate"]["spec"]["template"]["spec"]["initContainers"][3][
-                "image"
-            ] = self.get_headless_image()
-
-            new_doc = yaml.safe_dump(doc, sort_keys=False, width=83)
         return new_doc
 
     def replace_seed(self, index: Optional[int]):

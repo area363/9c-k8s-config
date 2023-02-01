@@ -78,13 +78,6 @@ def test_replace_manifests(mocker):
             "100/test-test",
         ),
         (
-            "snapshot-partition-reset",
-            [
-                ("NineChronicles.Headless", "v100310-rc1", "headless1"),
-            ],
-            "19/test-test",
-        ),
-        (
             "snapshot-partition",
             [
                 ("NineChronicles.Headless", "v100310-rc1", "headless1"),
