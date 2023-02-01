@@ -115,8 +115,8 @@ items:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 100Gi
-        storageClassName: gp2
+            storage: 500Gi
+        storageClassName: gp3
         volumeMode: Filesystem
 kind: List
 metadata:
