@@ -111,7 +111,7 @@ spec:
         image: nginx
         name: wait-for-miner
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-internal-2xl
+        alpha.eksctl.io/nodegroup-name: 9c-internal-r6g-xl
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       volumes:
@@ -131,6 +131,6 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 100Gi
-      storageClassName: gp2-extensible-us-east-2c
+          storage: 500Gi
+      storageClassName: gp3
       volumeMode: Filesystem
