@@ -28,7 +28,7 @@ spec:
         - --graphql-port=31237
         command:
         - dotnet
-        image: planetariumhq/libplanet-seed:git-c984fa6e98016527e95fe9b50c39a2bf247bcfb6
+        image: planetariumhq/libplanet-seed:git-299318d9a031a6d38cfbad252e04730990a6af47
         imagePullPolicy: IfNotPresent
         env:
         - name: SEED_PRIVATE_KEY

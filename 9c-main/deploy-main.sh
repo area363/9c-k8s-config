@@ -35,8 +35,7 @@ clear_cluster() {
     remote-headless-3 \
     remote-headless-4 \
     remote-headless-5 \
-    remote-headless-31 \
-    remote-headless-99
+    remote-headless-31
 
     # Provide ample time so that the nodes can be fully terminated before a new deployment
     echo "Provide ample time so that the nodes can be fully terminated before a new deployment"
@@ -75,8 +74,7 @@ deploy_cluster() {
     -f $BASEDIR/remote-headless-3.yaml \
     -f $BASEDIR/remote-headless-4.yaml \
     -f $BASEDIR/remote-headless-5.yaml \
-    -f $BASEDIR/remote-headless-31.yaml \
-    -f $BASEDIR/remote-headless-99.yaml
+    -f $BASEDIR/remote-headless-31.yaml
 }
 
 echo "Checkout 9c-main cluster."
