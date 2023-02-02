@@ -22,6 +22,27 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: seed-pow
+spec:
+  ports:
+  - name: node
+    port: 31236
+    targetPort: 31236
+  - name: graphql
+    port: 31237
+    targetPort: 31237
+  - port: 6000
+    name: gossip
+    targetPort: 6000
+  selector:
+    app: internal-seed-pow
+  type: LoadBalancer
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
   name: explorer
 spec:
   ports:

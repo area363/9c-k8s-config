@@ -59,15 +59,16 @@ items:
         - args:
           - NineChronicles.Headless.Executable.dll
           - run
-          - --workers=500
           - --app-protocol-version=$(APP_PROTOCOL_VERSION_KEY)
           - --trusted-app-protocol-version-signer=02529a61b9002ba8f21c858224234af971e962cac9bd7e6b365e71e125c6463478
           - --genesis-block-path=https://release.nine-chronicles.com/genesis-block-9c-main
           - --store-path=/data/explorer
+          - --swarm-private-key
+          - $(PRIVATE_KEY)
           - --store-type=rocksdb
           - --ice-server=turn://0ed3e48007413e7c2e638f13ddd75ad272c6c507e081bd76a75e4b7adc86c9af:0apejou+ycZFfwtREeXFKdfLj2gCclKzz5ZJ49Cmy6I=@turn-us.planetarium.dev:3478/
           - --peer
-          - 027bd36895d68681290e570692ad3736750ceaab37be402442ffb203967f98f7b6,afba17f51f1264325be8ae810ae19e66-933209316.us-east-2.elb.amazonaws.com,31236
+          - 0229e24efdfc9dfac2f3f42d4652bc178539063573bd61961a39e44bb94b732690,ae9663d03fcef4dd09e26ca9fcaa37d8-761123367.us-east-2.elb.amazonaws.com,31236
           - --graphql-server
           - --graphql-host=0.0.0.0
           - --graphql-port=31235
@@ -79,6 +80,11 @@ items:
           image: kustomization-ninechronicles-headless
           imagePullPolicy: IfNotPresent
           env:
+          - name: PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: headless-keys
+                key: explorer
           - name: APP_PROTOCOL_VERSION_KEY
             valueFrom:
               configMapKeyRef:

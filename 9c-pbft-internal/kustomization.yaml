@@ -1,13 +1,19 @@
 images:
 - name: kustomization-libplanet-seed
   newName: planetariumhq/libplanet-seed
-  newTag: git-d52f80f561bf22066fb7555db829f7d262fdece6
+  newTag: git-c984fa6e98016527e95fe9b50c39a2bf247bcfb6
 - name: kustomization-ninechronicles-headless
   newName: planetariumhq/ninechronicles-headless
-  newTag: git-e3be224290311b770b593a159c88682446acddb9 
+# PoW
+# newTag: git-ea9954a841ddda079d37b7bb0a280b5ca6a2fec4-mk2
+# PBFT
+  newTag: git-a72bf6afa5c246ad0274977643b9a3fda1e482b0
 - name: kustomization-ninechronicles-dataprovider
   newName: planetariumhq/ninechronicles-dataprovider
-  newTag: git-d932d9a717616f02f78845e67df628863b84aaf3
+  newTag: git-609a7b1e07f7a5dfea2af25aea7a9682dc5292ac
+- name: kustomization-ninechronicles-snapshot
+  newName: planetariumhq/ninechronicles-snapshot
+  newTag: git-88212493c8d4d7a5cbb7e597a2876cea34b56ac2-dynamic
 resources:
  - explorer.yaml
  - validator-1.yaml
@@ -23,4 +29,6 @@ resources:
  - validator-11.yaml
  - validator-12.yaml
  - remote-headless-1.yaml
- - tcp-seed-deployment.yaml
+ - snapshot.yaml
+# - seed.yaml
+ - seed-pow.yaml
