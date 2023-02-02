@@ -49,6 +49,8 @@ spec:
       - args:
         - NineChronicles.Headless.Executable.dll
         - run
+        - --app-protocol-version
+        - $(APP_PROTOCOL_VERSION_KEY)
         - --store-path=/data/validator
         - --swarm-private-key
         - $(PRIVATE_KEY)
@@ -59,7 +61,7 @@ spec:
         - $(PRIVATE_KEY)
         - --consensus-private-key
         - $(PRIVATE_KEY)
-        - --config-path=https://9c-dev-cluster-configs.s3.ap-northeast-2.amazonaws.com/9c-pbft-internal.validator.appsettings.json
+        - --config-path=https://9c-dev-cluster-configs.s3.ap-northeast-2.amazonaws.com/9c-pbft-internal-2.validator.appsettings.json
         command:
         - dotnet
         image: kustomization-ninechronicles-headless
@@ -99,7 +101,7 @@ spec:
       imagePullSecrets:
       - name: acr-regcred
       nodeSelector:
-        beta.kubernetes.io/os: linux
+        node.kubernetes.io/instance-type: m5.xlarge
       restartPolicy: Always
       volumes:
       - name: script-volume

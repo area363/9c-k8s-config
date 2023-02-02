@@ -22,7 +22,10 @@ spec:
       - args:
         - NineChronicles.Headless.Executable.dll
         - run
+        - --app-protocol-version=$(APP_PROTOCOL_VERSION_KEY)
         - --store-path=/data/headless
+        - --swarm-private-key
+        - $(PRIVATE_KEY)
         - --graphql-server
         - --graphql-host=0.0.0.0
         - --graphql-port=80
@@ -32,12 +35,17 @@ spec:
         - --rpc-listen-port=31238
         - --chain-tip-stale-behavior-type=reboot
         - --no-cors
-        - --config-path=https://9c-dev-cluster-configs.s3.ap-northeast-2.amazonaws.com/9c-pbft-internal.headless.appsettings.json
+        - --config-path=https://9c-dev-cluster-configs.s3.ap-northeast-2.amazonaws.com/9c-pbft-internal-2.headless.appsettings.json
         command:
         - dotnet
         image: kustomization-ninechronicles-headless
         imagePullPolicy: IfNotPresent
         env:
+        - name: PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: headless-keys
+              key: headless1
         - name: APP_PROTOCOL_VERSION_KEY
           valueFrom:
             configMapKeyRef:
