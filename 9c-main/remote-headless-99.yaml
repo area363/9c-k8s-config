@@ -130,7 +130,7 @@ spec:
           value: remote-headless-99
       dnsPolicy: ClusterFirst
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-main-r6g-xl
+        alpha.eksctl.io/nodegroup-name: 9c-main
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler

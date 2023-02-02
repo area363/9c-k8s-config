@@ -111,6 +111,6 @@ spec:
             secret:
               secretName: aws-keys
           nodeSelector:
-            node.kubernetes.io/instance-type: c5.4xlarge
+            node.kubernetes.io/instance-type: c4.4xlarge
   schedule: 56 * * * *
   successfulJobsHistoryLimit: 1
