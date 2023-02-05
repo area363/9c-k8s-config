@@ -50,6 +50,9 @@ spec:
             cpu: "0.4"
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+        alpha.eksctl.io/nodegroup-name: 9c-main
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
