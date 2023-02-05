@@ -113,7 +113,7 @@ spec:
                   name: aws-keys
                   key: cf_distribution_id
           nodeSelector:
-            alpha.eksctl.io/nodegroup-name: 9c-main-4xl
+            alpha.eksctl.io/nodegroup-name: 9c-main-xl
             beta.kubernetes.io/os: linux
           restartPolicy: OnFailure
           volumes:
