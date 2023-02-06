@@ -101,7 +101,7 @@ curl --data "[K8S] Mainnet deployment complete." "https://planetariumhq.slack.co
 curl --data "[K8S] Mainnet deployment complete." "https://planetariumhq.slack.com/services/hooks/slackbot?token=$slack_token&channel=%239c-deploy-noti"
 
 echo "Deploy 9c-onboarding cluster."
-$BASEDIR/../9c-onboarding/deploy-headless.sh
+# $BASEDIR/../9c-onboarding/deploy-headless.sh
 
 kubectl config set current-context arn:aws:eks:us-east-2:319679068466:cluster/9c-main
 kubectl get pod
