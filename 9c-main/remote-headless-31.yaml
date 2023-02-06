@@ -60,7 +60,7 @@ spec:
         - --tx-life-time=60
         command:
         - dotnet
-        image: planetariumhq/ninechronicles-headless:v100361-1
+        image: planetariumhq/ninechronicles-headless:v100361-2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -128,7 +128,7 @@ spec:
         - name: DD_SERVICE
           value: remote-headless-31
         - name: IpRateLimiting__EnableRateLimiting
-          value: "true"
+          value: 'true'
       dnsPolicy: ClusterFirst
       nodeSelector:
         alpha.eksctl.io/nodegroup-name: 9c-main-r6g-xl
