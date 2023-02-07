@@ -28,6 +28,8 @@ clear_cluster() {
     main-full-state \
     main-miner-3 \
     explorer \
+    main-data-provider \
+    main-data-provider-db \
     remote-headless-1 \
     remote-headless-2 \
     remote-headless-3 \
@@ -65,6 +67,8 @@ deploy_cluster() {
     -f $BASEDIR/full-state.yaml \
     -f $BASEDIR/miner-3.yaml \
     -f $BASEDIR/explorer.yaml \
+    -f $BASEDIR/data-provider.yaml \
+    -f $BASEDIR/data-provider-db.yaml \
     -f $BASEDIR/remote-headless-1.yaml \
     -f $BASEDIR/remote-headless-2.yaml \
     -f $BASEDIR/remote-headless-3.yaml \
@@ -101,7 +105,7 @@ curl --data "[K8S] Mainnet deployment complete." "https://planetariumhq.slack.co
 curl --data "[K8S] Mainnet deployment complete." "https://planetariumhq.slack.com/services/hooks/slackbot?token=$slack_token&channel=%239c-deploy-noti"
 
 echo "Deploy 9c-onboarding cluster."
-# $BASEDIR/../9c-onboarding/deploy-headless.sh
+$BASEDIR/../9c-onboarding/deploy-headless.sh
 
 kubectl config set current-context arn:aws:eks:us-east-2:319679068466:cluster/9c-main
 kubectl get pod
