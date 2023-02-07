@@ -324,6 +324,24 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: headless-admin
+spec:
+  ports:
+  - name: graphql
+    port: 80
+    targetPort: 80
+  - name: headless
+    port: 31234
+    targetPort: 31234
+  selector:
+    app: headless-admin
+  type: LoadBalancer
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
   name: remote-headless-1
 spec:
   ports:
