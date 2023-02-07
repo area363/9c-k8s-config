@@ -95,7 +95,7 @@ spec:
       imagePullSecrets:
       - name: acr-regcred
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-main-c5-4xl
+        alpha.eksctl.io/nodegroup-name: 9c-main-c7g-4xl
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler
