@@ -123,7 +123,7 @@ spec:
           name: main-data-provider-db-data
       dnsPolicy: ClusterFirst
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-main-r6g-xl
+        alpha.eksctl.io/nodegroup-name: 9c-main-c7g-2xl
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler

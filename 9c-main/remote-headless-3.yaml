@@ -131,7 +131,7 @@ spec:
           subPath: readiness_probe.sh
       dnsPolicy: ClusterFirst
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-main-c6g-4xl
+        alpha.eksctl.io/nodegroup-name: 9c-main-c7g-4xl
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler
