@@ -247,7 +247,6 @@ data:
     @INCLUDE application-log.conf
     @INCLUDE dataplane-log.conf
     @INCLUDE host-log.conf
-    @INCLUDE test-cwl-s3.conf
   
   application-log.conf: |
     [INPUT]
@@ -322,7 +321,7 @@ data:
         Name                         rewrite_tag
         Match                        application.*
         Rule                         $TAG remote-headless-3|remote-headless-4|remote-headless-5 cwl.test.$TAG true
-        Emitter_Name                 for_cloudwatch
+        Emitter_Name                 for_cloudwatch_test
 
     [OUTPUT]
         Name                cloudwatch_logs
@@ -345,14 +344,14 @@ data:
         auto_create_group            true
         extra_user_agent             container-insights
 
-    [OUTPUT]
-        Name                         s3
-        Match                        application.*
-        region                       ${AWS_REGION}
-        Bucket                       fluent-bit.planetariumhq.com
-        Total_file_size              250M
-        S3_key_format                /${CLUSTER_NAME}/$TAG/%Y/%m/%d/${HOST_NAME}-$UUID.gz
-        S3_key_format_tag_delimiters .-
+    # [OUTPUT]
+    #     Name                         s3
+    #     Match                        application.*
+    #     region                       ${AWS_REGION}
+    #     Bucket                       fluent-bit.planetariumhq.com
+    #     Total_file_size              250M
+    #     S3_key_format                /${CLUSTER_NAME}/$TAG/%Y/%m/%d/${HOST_NAME}-$UUID.gz
+    #     S3_key_format_tag_delimiters .-
 
   dataplane-log.conf: |
     [INPUT]
