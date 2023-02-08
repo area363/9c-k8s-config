@@ -305,10 +305,24 @@ data:
         Annotations         Off
 
     [FILTER]
-        Name                modify
-        Match               application.*
-        Remove              kubernetes
-        Remove              stream
+        Name                         parser
+        Match                        application.*
+        Key_Name                     log
+        Parser                       libplanet
+        Reserve_Data                 On
+        Preserve_Key                 On
+
+    [FILTER]
+        Name                         rewrite_tag
+        Match                        application.*
+        Rule                         $log_level ^(?!DBG)\w+$ cwl.$TAG true
+        Emitter_Name                 for_cloudwatch
+
+    [FILTER]
+        Name                         rewrite_tag
+        Match                        application.*
+        Rule                         $TAG remote-headless-3|remote-headless-4|remote-headless-5 cwl.test.$TAG true
+        Emitter_Name                 for_cloudwatch
 
     [OUTPUT]
         Name                cloudwatch_logs
@@ -319,48 +333,9 @@ data:
         auto_create_group   true
         extra_user_agent    container-insights
 
-  test-cwl-s3.conf: |
-    [INPUT]
-        Name                         tail
-        Tag                          application.*
-        Path                         /var/log/containers/remote-headless-3*, /var/log/containers/remote-headless-4*, /var/log/containers/remote-headless-5*
-        Docker_Mode                  On
-        Docker_Mode_Flush            5
-        Docker_Mode_Parser           container_firstline
-        Parser                       docker
-        DB                           /var/fluent-bit/state/flb_container.db
-        Mem_Buf_Limit                50MB
-        Skip_Long_Lines              On
-        Refresh_Interval             10
-        Rotate_Wait                  30
-        storage.type                 filesystem
-        Read_from_Head               ${READ_FROM_HEAD}
-    [FILTER]
-        Name                         kubernetes
-        Match                        application.*
-        Kube_URL                     https://kubernetes.default.svc:443
-        Kube_Tag_Prefix              application.var.log.containers.
-        Merge_Log                    On
-        Merge_Log_Key                log_processed
-        K8S-Logging.Parser           On
-        K8S-Logging.Exclude          Off
-        Labels                       Off
-        Annotations                  Off
-    [FILTER]
-        Name                         parser
-        Match                        application.*
-        Key_Name                     log
-        Parser                       libplanet
-        Reserve_Data                 On
-        Preserve_Key                 On
-    [FILTER]
-        Name                         rewrite_tag
-        Match                        application.*
-        Rule                         $log_level ^(?!DBG)\w+$ cwl.$TAG true
-        Emitter_Name                 for_cloudwatch
     [OUTPUT]
         Name                         cloudwatch_logs
-        Match                        cwl.*
+        Match                        cwl.test.*
         region                       ${AWS_REGION}
         log_retention_days           30
         log_group_name               fallback-group
@@ -369,6 +344,7 @@ data:
         # log_stream_template          $kubernetes['pod_name'].$kubernetes['container_name'].$kubernetes['host'].$kubernetes['docker_id'].log
         auto_create_group            true
         extra_user_agent             container-insights
+
     [OUTPUT]
         Name                         s3
         Match                        application.*
