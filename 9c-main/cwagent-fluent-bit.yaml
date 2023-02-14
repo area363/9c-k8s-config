@@ -351,21 +351,22 @@ data:
 
     [OUTPUT]
         Name                         s3
-        Match                        application.*
+        Match                        test_rpc.*
         region                       ${AWS_REGION}
         Bucket                       fluent-bit.planetariumhq.com
-        Total_file_size              50M
-        S3_key_format                /${CLUSTER_NAME}/$TAG[4]/%Y/%m/%d/$TAG-$UUID.gz
-        S3_key_format_tag_delimiters .
+        Total_file_size              100M
+        compression                  gzip
+        S3_key_format                /${CLUSTER_NAME}/$TAG[8]/%Y/%m/%d/%H/$TAG-$UUID.gz
+        S3_key_format_tag_delimiters ._
 
-    [OUTPUT]
-        Name                         s3
-        Match                        test_rpc.$TAG
-        region                       ${AWS_REGION}
-        Bucket                       fluent-bit.planetariumhq.com
-        Total_file_size              50M
-        S3_key_format                /${CLUSTER_NAME}/$TAG[5]/%Y/%m/%d/$TAG-$UUID.gz
-        S3_key_format_tag_delimiters .
+    # [OUTPUT]
+    #     Name                         s3
+    #     Match                        application.*
+    #     region                       ${AWS_REGION}
+    #     Bucket                       fluent-bit.planetariumhq.com
+    #     Total_file_size              100M
+    #     S3_key_format                /${CLUSTER_NAME}/$TAG[4]/%Y/%m/%d/%H/%M/$TAG-$UUID.gz
+    #     S3_key_format_tag_delimiters .
 
   dataplane-log.conf: |
     [INPUT]
@@ -407,11 +408,12 @@ data:
 
     [OUTPUT]
         Name                         s3
-        Match                        application.*
+        Match                        dataplane.*
         region                       ${AWS_REGION}
         Bucket                       fluent-bit.planetariumhq.com
-        Total_file_size              50M
-        S3_key_format                /${CLUSTER_NAME}/$TAG[4]/%Y/%m/%d/$TAG-$UUID.gz
+        Total_file_size              100M
+        compression                  gzip
+        S3_key_format                /${CLUSTER_NAME}/$TAG[0]/%Y/%m/%d/$TAG-$UUID.gz
         S3_key_format_tag_delimiters .
 
   host-log.conf: |
@@ -455,11 +457,12 @@ data:
 
     [OUTPUT]
         Name                         s3
-        Match                        application.*
+        Match                        host.*
         region                       ${AWS_REGION}
         Bucket                       fluent-bit.planetariumhq.com
-        Total_file_size              50M
-        S3_key_format                /${CLUSTER_NAME}/$TAG[4]/%Y/%m/%d/$TAG-$UUID.gz
+        Total_file_size              100M
+        compression                  gzip
+        S3_key_format                /${CLUSTER_NAME}/$TAG[0]/%Y/%m/%d/$TAG-$UUID.gz
         S3_key_format_tag_delimiters .
 
   parsers.conf: |
