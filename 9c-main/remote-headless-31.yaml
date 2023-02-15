@@ -57,7 +57,7 @@ spec:
         - --chain-tip-stale-behavior-type=reboot
         - --sentry-dsn=https://625a444555a547e8822ee86d4f38f046@o195672.ingest.sentry.io/6197051
         - --sentry-trace-sample-rate=0.3
-        - --tx-life-time=60
+        - --tx-life-time=10
         command:
         - dotnet
         image: planetariumhq/ninechronicles-headless:v100361-2
