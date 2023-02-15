@@ -50,7 +50,7 @@ spec:
         - name: NC_GenesisBlockPath
           value: https://release.nine-chronicles.com/genesis-block-9c-main
         - name: NC_TxLifeTime
-          value: '60'
+          value: '10'
         - name: NC_MySqlConnectionString
           valueFrom:
             secretKeyRef:

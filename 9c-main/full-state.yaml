@@ -59,7 +59,7 @@ spec:
         - --graphql-host=0.0.0.0
         - --graphql-port=80
         - --chain-tip-stale-behavior-type=reboot
-        - --tx-life-time=60
+        - --tx-life-time=10
         command:
         - dotnet
         env:

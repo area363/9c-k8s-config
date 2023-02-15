@@ -61,7 +61,7 @@ items:
           - --graphql-port=31235
           - --no-cors
           - --chain-tip-stale-behavior-type=reboot
-          - --tx-life-time=60
+          - --tx-life-time=10
           command:
           - dotnet
           env:
