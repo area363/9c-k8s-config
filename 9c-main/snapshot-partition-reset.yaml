@@ -20,6 +20,10 @@ spec:
             - /bin/replace_snapshot.sh
             image: nginx
             name: replace-snapshot
+            resources:
+              requests:
+                cpu: 1300m
+                memory: 10Gi
             volumeMounts:
             - mountPath: /bin/replace_snapshot.sh
               name: snapshot-script-partition-reset
@@ -51,6 +55,10 @@ spec:
             - /bin/upload_snapshot.sh
             image: planetariumhq/ninechronicles-snapshot:git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
             name: upload-snapshot1
+            resources:
+              requests:
+                cpu: 1300m
+                memory: 10Gi
             volumeMounts:
             - mountPath: /bin/upload_snapshot.sh
               name: snapshot-script-partition-reset
@@ -86,6 +94,10 @@ spec:
             - /bin/upload_snapshot.sh
             image: planetariumhq/ninechronicles-snapshot:git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
             name: upload-snapshot2
+            resources:
+              requests:
+                cpu: 1300m
+                memory: 10Gi
             volumeMounts:
             - mountPath: /bin/upload_snapshot.sh
               name: snapshot-script-partition-reset

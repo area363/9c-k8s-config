@@ -19,6 +19,10 @@ spec:
             - /bin/upload_snapshot.sh
             image: planetariumhq/ninechronicles-snapshot:git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
             name: upload-snapshot
+            resources:
+              requests:
+                cpu: 1300m
+                memory: 10Gi
             volumeMounts:
             - mountPath: /bin/upload_snapshot.sh
               name: snapshot-script-partition
@@ -53,6 +57,10 @@ spec:
             - /bin/preload_headless.sh
             image: planetariumhq/ninechronicles-headless:v100361-3
             name: preload-headless
+            resources:
+              requests:
+                cpu: 1300m
+                memory: 10Gi
             volumeMounts:
             - mountPath: /bin/preload_headless.sh
               name: snapshot-script-partition
