@@ -333,7 +333,9 @@ data:
         Name                         cloudwatch_logs
         Match                        default_application.*
         region                       ${AWS_REGION}
-        log_group_name               /aws/containerinsights/${CLUSTER_NAME}/application
+        log_retention_days           14
+        log_group_name               fallback-group
+        log_group_template           /aws/containerinsights/${CLUSTER_NAME}/$kubernetes['namespace_name'].$kubernetes['pod_name']
         log_stream_prefix            ${HOST_NAME}-   
         auto_create_group            true
         extra_user_agent             container-insights
@@ -342,7 +344,7 @@ data:
         Name                         cloudwatch_logs
         Match                        cwl.*
         region                       ${AWS_REGION}
-        log_retention_days           30
+        log_retention_days           14
         log_group_name               fallback-group
         log_group_template           /aws/containerinsights/${CLUSTER_NAME}/$kubernetes['namespace_name'].$kubernetes['pod_name']
         log_stream_prefix            ${HOST_NAME}-
@@ -358,15 +360,6 @@ data:
         compression                  gzip
         S3_key_format                /${CLUSTER_NAME}/$TAG[8]/%Y/%m/%d/%H/$TAG-$UUID.gz
         S3_key_format_tag_delimiters ._
-
-    # [OUTPUT]
-    #     Name                         s3
-    #     Match                        application.*
-    #     region                       ${AWS_REGION}
-    #     Bucket                       fluent-bit.planetariumhq.com
-    #     Total_file_size              100M
-    #     S3_key_format                /${CLUSTER_NAME}/$TAG[4]/%Y/%m/%d/%H/%M/$TAG-$UUID.gz
-    #     S3_key_format_tag_delimiters .
 
   dataplane-log.conf: |
     [INPUT]
