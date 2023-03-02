@@ -55,7 +55,7 @@ spec:
             - $(SLACK_TOKEN)
             command:
             - /bin/preload_headless.sh
-            image: planetariumhq/ninechronicles-headless:v100370-1
+            image: planetariumhq/ninechronicles-headless:v100371-1
             name: preload-headless
             resources:
               requests:
