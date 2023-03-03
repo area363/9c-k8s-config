@@ -335,6 +335,14 @@ data:
         Rule                         $log_level ^(?!DBG)\w+$ cwl.$TAG true
         Emitter_Name                 for_cloudwatch
 
+    [FILTER]
+        Name                         parser
+        Match                        test_loki.*
+        Key_Name                     log
+        Parser                       cri
+        Reserve_Data                 On
+        Preserve_Key                 On
+
     [OUTPUT]
         Name                         cloudwatch_logs
         Match                        default_application.*
