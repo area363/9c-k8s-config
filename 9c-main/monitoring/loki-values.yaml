@@ -1,0 +1,86 @@
+loki:
+  auth_enabled: false
+  commonConfig:
+    path_prefix: /var/loki
+    replication_factor: 1
+  storage:
+    bucketNames:
+      admin: admin
+      chunks: loki.planetariumhq.com
+      ruler: ruler
+    type: s3
+  schema_config:
+    configs:
+    - from: "2022-01-11"
+      index:
+        period: 24h
+        prefix: loki_index_
+      store: boltdb-shipper
+      object_store: s3
+      schema: v12
+
+  limits_config:
+    enforce_metric_name: false
+    max_cache_freshness_per_query: 10m
+    max_query_parallelism: 2
+    max_query_series: 100000
+    reject_old_samples: true
+    reject_old_samples_max_age: 168h
+    retention_period: 360h
+    split_queries_by_interval: 15m
+
+  server:
+    grpc_listen_port: 9095
+    grpc_server_max_recv_msg_size: 20388078
+    grpc_server_max_send_msg_size: 20388078
+    http_listen_port: 3100
+    http_server_read_timeout: 600s
+    http_server_write_timeout: 600s
+
+  storage_config:
+    aws:
+      insecure: false
+      s3: s3://us-east-2/loki.planetariumhq.com
+      s3forcepathstyle: true
+    boltdb_shipper:
+      active_index_directory: /var/loki/index
+      shared_store: s3
+  rulerConfig:
+    storage:
+      type: local
+      local:
+        directory: /var/loki/rules
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::319679068466:role/eks-9c-main-loki"
+write:
+  replicas: 2
+  nodeSelector:
+    alpha.eksctl.io/nodegroup-name: 9c-main
+    
+read:
+  replicas: 1
+  nodeSelector:
+    alpha.eksctl.io/nodegroup-name: 9c-main
+
+test:
+  enabled: false
+monitoring:
+  lokiCanary:
+    enabled: false
+  dashboards:
+    enabled: false
+  rules:
+    enabled: false
+  alerts:
+    enabled: false
+  serviceMonitor:
+    enabled: false
+  selfMonitoring:
+    enabled: false
+    lokiCanary:
+      enabled: false
+    grafanaAgent:
+      installOperator: false
+

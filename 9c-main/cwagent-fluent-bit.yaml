@@ -325,9 +325,23 @@ data:
 
     [FILTER]
         Name                         rewrite_tag
+        Match                        default_application.*
+        Rule                         $kubernetes['container_name'] remote-headless-99 test_loki.$TAG false
+        Emitter_Name                 filter_test_loki
+        Emitter_Mem_Buf_Limit        20M
+
+    [FILTER]
+        Name                         rewrite_tag
         Match                        test_rpc.*
         Rule                         $log_level ^(?!DBG)\w+$ cwl.$TAG true
         Emitter_Name                 for_cloudwatch
+
+    [FILTER]
+        name          parser
+        Match         test_loki.*
+        Parser        docker
+        key_name      log
+        Reserve_Data  On
 
     [OUTPUT]
         Name                         cloudwatch_logs
@@ -360,6 +374,14 @@ data:
         compression                  gzip
         S3_key_format                /${CLUSTER_NAME}/$TAG[8]/%Y/%m/%d/%H/$TAG-$UUID.gz
         S3_key_format_tag_delimiters ._
+
+    [OUTPUT]
+        Name                         loki
+        Match                        test_loki.*
+        host                         loki-gateway.monitoring.svc.cluster.local
+        port                         80
+        labels                       job=fluentbit
+        auto_kubernetes_labels       on
 
   dataplane-log.conf: |
     [INPUT]
