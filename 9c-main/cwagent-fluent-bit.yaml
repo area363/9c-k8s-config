@@ -328,6 +328,7 @@ data:
         Match                        default_application.*
         Rule                         $kubernetes['container_name'] remote-headless-99 test_loki.$TAG false
         Emitter_Name                 filter_test_loki
+        Emitter_Mem_Buf_Limit        20M
 
     [FILTER]
         Name                         rewrite_tag
@@ -336,12 +337,11 @@ data:
         Emitter_Name                 for_cloudwatch
 
     [FILTER]
-        Name                         parser
-        Match                        test_loki.*
-        Key_Name                     log
-        Parser                       cri
-        Reserve_Data                 On
-        Preserve_Key                 On
+        name          parser
+        Match         test_loki.*
+        Parser        docker
+        key_name      log
+        Reserve_Data  On
 
     [OUTPUT]
         Name                         cloudwatch_logs
@@ -512,13 +512,6 @@ data:
         Name                libplanet
         Format              regex
         Regex               (?<log_time>(?<=\[)\d{2}:\d{2}:\d{2})\s(?<log_level>\w{3})\]\s(?<log_source>(?<=\[).*\])?(?<log_message>.*)
-
-    [PARSER]
-        Name        cri
-        Format      regex
-        Regex       ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log_message>.*)$
-        Time_Key    time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L%z
 
 ---
 apiVersion: apps/v1
