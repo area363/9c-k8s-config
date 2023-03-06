@@ -320,7 +320,7 @@ data:
     [FILTER]
         Name                         rewrite_tag
         Match                        default_application.*
-        Rule                         $kubernetes['container_name'] remote-headless-3|remote-headless-4|remote-headless-5 test_rpc.$TAG false
+        Rule                         $kubernetes['container_name'] (?=^((?!miner-2).)*$)(?=^((?!remote-headless-1).)*$)(?=^((?!remote-headless-99).)*$)(?=^((?!full-state).)*$) test_rpc.$TAG false
         Emitter_Name                 filter_test_rpc
 
     [FILTER]
