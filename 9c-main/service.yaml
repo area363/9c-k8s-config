@@ -186,18 +186,35 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-2:319679068466:certificate/2481ac9e-2037-4331-9234-4b3f86d50ad3
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
   name: remote-headless-1
+  namespace: default
 spec:
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
   ports:
   - name: graphql
     port: 80
+    protocol: TCP
     targetPort: 80
   - name: rpc
     port: 31238
+    protocol: TCP
     targetPort: 31238
   - name: headless
     port: 31234
+    protocol: TCP
     targetPort: 31234
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 80
   selector:
     app: remote-headless-1
   type: LoadBalancer
@@ -207,18 +224,35 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-2:319679068466:certificate/2481ac9e-2037-4331-9234-4b3f86d50ad3
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
   name: remote-headless-2
+  namespace: default
 spec:
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
   ports:
   - name: graphql
     port: 80
+    protocol: TCP
     targetPort: 80
   - name: rpc
     port: 31238
+    protocol: TCP
     targetPort: 31238
   - name: headless
     port: 31234
+    protocol: TCP
     targetPort: 31234
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 80
   selector:
     app: remote-headless-2
   type: LoadBalancer
@@ -228,18 +262,35 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-2:319679068466:certificate/2481ac9e-2037-4331-9234-4b3f86d50ad3
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
   name: remote-headless-3
+  namespace: default
 spec:
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
   ports:
   - name: graphql
     port: 80
+    protocol: TCP
     targetPort: 80
   - name: rpc
     port: 31238
+    protocol: TCP
     targetPort: 31238
   - name: headless
     port: 31234
+    protocol: TCP
     targetPort: 31234
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 80
   selector:
     app: remote-headless-3
   type: LoadBalancer
@@ -249,18 +300,35 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-2:319679068466:certificate/2481ac9e-2037-4331-9234-4b3f86d50ad3
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
   name: remote-headless-4
+  namespace: default
 spec:
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
   ports:
   - name: graphql
     port: 80
+    protocol: TCP
     targetPort: 80
   - name: rpc
     port: 31238
+    protocol: TCP
     targetPort: 31238
   - name: headless
     port: 31234
+    protocol: TCP
     targetPort: 31234
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 80
   selector:
     app: remote-headless-4
   type: LoadBalancer
@@ -270,18 +338,35 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-2:319679068466:certificate/2481ac9e-2037-4331-9234-4b3f86d50ad3
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
   name: remote-headless-5
+  namespace: default
 spec:
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
   ports:
   - name: graphql
     port: 80
+    protocol: TCP
     targetPort: 80
   - name: rpc
     port: 31238
+    protocol: TCP
     targetPort: 31238
   - name: headless
     port: 31234
+    protocol: TCP
     targetPort: 31234
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 80
   selector:
     app: remote-headless-5
   type: LoadBalancer
