@@ -380,8 +380,9 @@ data:
         Match                        test_loki.*
         host                         loki-gateway.monitoring.svc.cluster.local
         port                         80
-        labels                       job=fluentbit
+        labels                       job=fluentbit, src=$Source, tag=$Tag, subtag=$Subtag, container=$kubernetes['container_name']
         auto_kubernetes_labels       on
+        line_format                  json
 
   dataplane-log.conf: |
     [INPUT]
