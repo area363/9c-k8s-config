@@ -320,19 +320,13 @@ data:
     [FILTER]
         Name                         rewrite_tag
         Match                        default_application.*
-        Rule                         $kubernetes['container_name'] (?=^((?!miner-2).)*$)(?=^((?!remote-headless-1).)*$)(?=^((?!remote-headless-99).)*$)(?=^((?!full-state).)*$) test_rpc.$TAG false
-        Emitter_Name                 filter_test_rpc
-
-    [FILTER]
-        Name                         rewrite_tag
-        Match                        default_application.*
         Rule                         $kubernetes['container_name'] remote-headless-99 test_loki.$TAG false
         Emitter_Name                 filter_test_loki
         Emitter_Mem_Buf_Limit        20M
 
     [FILTER]
         Name                         rewrite_tag
-        Match                        test_rpc.*
+        Match                        default_application.*
         Rule                         $log_level ^(?!DBG)\w+$ cwl.$TAG true
         Emitter_Name                 for_cloudwatch
 
@@ -342,17 +336,6 @@ data:
         Parser        docker
         key_name      log
         Reserve_Data  On
-
-    [OUTPUT]
-        Name                         cloudwatch_logs
-        Match                        default_application.*
-        region                       ${AWS_REGION}
-        log_retention_days           14
-        log_group_name               fallback-group
-        log_group_template           /aws/containerinsights/${CLUSTER_NAME}/$kubernetes['namespace_name'].$kubernetes['pod_name']
-        log_stream_prefix            ${HOST_NAME}-   
-        auto_create_group            true
-        extra_user_agent             container-insights
 
     [OUTPUT]
         Name                         cloudwatch_logs
@@ -367,7 +350,7 @@ data:
 
     [OUTPUT]
         Name                         s3
-        Match                        test_rpc.*
+        Match                        default_application.*
         region                       ${AWS_REGION}
         Bucket                       fluent-bit.planetariumhq.com
         Total_file_size              100M
