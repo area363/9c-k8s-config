@@ -35,10 +35,7 @@ deploy_cluster() {
     -f $BASEDIR/configmap-full.yaml \
     -f $BASEDIR/configmap-partition-reset.yaml \
     -f $BASEDIR/configmap-partition.yaml \
-    -f $BASEDIR/configmap-probe.yaml \
-    -f $BASEDIR/snapshot-partition.yaml \
-    -f $BASEDIR/snapshot-partition-reset.yaml \
-    -f $BASEDIR/snapshot-full.yaml
+    -f $BASEDIR/configmap-probe.yaml
 
   # Wait for seed nodes and miner to be fully deployed
   echo "Wait for seed nodes and miner to be fully deployed"
