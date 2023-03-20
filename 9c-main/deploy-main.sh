@@ -19,23 +19,10 @@ delete_miner() {
 }
 
 clear_cluster() {
-  kubectl delete deployment \
-    main-tcp-seed-1 \
-    main-tcp-seed-2 \
-    main-tcp-seed-3
 
   kubectl delete sts \
-    main-full-state \
-    main-miner-3 \
-    explorer \
-    main-data-provider \
-    main-data-provider-db \
-    remote-headless-1 \
-    remote-headless-2 \
-    remote-headless-3 \
-    remote-headless-4 \
-    remote-headless-5 \
-    remote-headless-31
+    remote-headless-31 \
+    remote-headless-99
 
     # Provide ample time so that the nodes can be fully terminated before a new deployment
     echo "Provide ample time so that the nodes can be fully terminated before a new deployment"
@@ -45,17 +32,13 @@ clear_cluster() {
 deploy_cluster() {
   kubectl apply \
     -f $BASEDIR/configmap-versions.yaml \
-    -f $BASEDIR/tcp-seed-deployment-1.yaml \
-    -f $BASEDIR/tcp-seed-deployment-2.yaml \
-    -f $BASEDIR/tcp-seed-deployment-3.yaml \
     -f $BASEDIR/configmap-full.yaml \
     -f $BASEDIR/configmap-partition-reset.yaml \
     -f $BASEDIR/configmap-partition.yaml \
     -f $BASEDIR/configmap-probe.yaml \
     -f $BASEDIR/snapshot-partition.yaml \
     -f $BASEDIR/snapshot-partition-reset.yaml \
-    -f $BASEDIR/snapshot-full.yaml \
-    -f $BASEDIR/miner-2.yaml
+    -f $BASEDIR/snapshot-full.yaml
 
   # Wait for seed nodes and miner to be fully deployed
   echo "Wait for seed nodes and miner to be fully deployed"
@@ -64,17 +47,8 @@ deploy_cluster() {
   # Start remaining services
   echo "Start remaining services"
   kubectl apply  \
-    -f $BASEDIR/full-state.yaml \
-    -f $BASEDIR/miner-3.yaml \
-    -f $BASEDIR/explorer.yaml \
-    -f $BASEDIR/data-provider.yaml \
-    -f $BASEDIR/data-provider-db.yaml \
-    -f $BASEDIR/remote-headless-1.yaml \
-    -f $BASEDIR/remote-headless-2.yaml \
-    -f $BASEDIR/remote-headless-3.yaml \
-    -f $BASEDIR/remote-headless-4.yaml \
-    -f $BASEDIR/remote-headless-5.yaml \
-    -f $BASEDIR/remote-headless-31.yaml
+    -f $BASEDIR/remote-headless-31.yaml \
+    -f $BASEDIR/remote-headless-99.yaml
 }
 
 echo "Checkout 9c-main cluster."
