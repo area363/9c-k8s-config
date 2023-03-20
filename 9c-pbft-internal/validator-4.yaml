@@ -101,7 +101,7 @@ spec:
       imagePullSecrets:
       - name: acr-regcred
       nodeSelector:
-        node.kubernetes.io/instance-type: m5.xlarge
+        node.kubernetes.io/instance-type: m6g.xlarge
       restartPolicy: Always
       volumes:
       - name: script-volume
