@@ -7,7 +7,7 @@ images:
 # PoW
 # newTag: git-ea9954a841ddda079d37b7bb0a280b5ca6a2fec4-mk2
 # PBFT
-  newTag: git-a72bf6afa5c246ad0274977643b9a3fda1e482b0
+  newTag: git-2d469aaf156bdce4ae7413e02457606654bdee7b
 - name: kustomization-ninechronicles-dataprovider
   newName: planetariumhq/ninechronicles-dataprovider
   newTag: git-609a7b1e07f7a5dfea2af25aea7a9682dc5292ac
@@ -21,14 +21,14 @@ resources:
  - validator-3.yaml
  - validator-4.yaml
  - validator-5.yaml
- - validator-6.yaml
- - validator-7.yaml
- - validator-8.yaml
- - validator-9.yaml
- - validator-10.yaml
- - validator-11.yaml
- - validator-12.yaml
+#  - validator-6.yaml
+#  - validator-7.yaml
+#  - validator-8.yaml
+#  - validator-9.yaml
+#  - validator-10.yaml
+#  - validator-11.yaml
+#  - validator-12.yaml
  - remote-headless-1.yaml
  - snapshot.yaml
-# - seed.yaml
- - seed-pow.yaml
+ - seed.yaml
+#  - seed-pow.yaml
