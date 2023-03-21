@@ -61,7 +61,7 @@ spec:
         - $(PRIVATE_KEY)
         - --consensus-private-key
         - $(PRIVATE_KEY)
-        - --config-path=https://9c-dev-cluster-configs.s3.ap-northeast-2.amazonaws.com/9c-pbft-internal-2.validator.appsettings.json
+        - --config-path=https://9c-dev-cluster-configs.s3.ap-northeast-2.amazonaws.com/9c-pbft-internal-3.validator.appsettings.json
         command:
         - dotnet
         image: kustomization-ninechronicles-headless

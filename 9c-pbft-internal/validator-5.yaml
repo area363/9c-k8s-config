@@ -49,6 +49,8 @@ spec:
       - args:
         - NineChronicles.Headless.Executable.dll
         - run
+        - --app-protocol-version
+        - $(APP_PROTOCOL_VERSION_KEY)
         - --store-path=/data/validator
         - --swarm-private-key
         - $(PRIVATE_KEY)
@@ -59,7 +61,7 @@ spec:
         - $(PRIVATE_KEY)
         - --consensus-private-key
         - $(PRIVATE_KEY)
-        - --config-path=https://9c-dev-cluster-configs.s3.ap-northeast-2.amazonaws.com/9c-pbft-internal.validator.appsettings.json
+        - --config-path=https://9c-dev-cluster-configs.s3.ap-northeast-2.amazonaws.com/9c-pbft-internal-3.validator.appsettings.json
         command:
         - dotnet
         image: kustomization-ninechronicles-headless
@@ -69,7 +71,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: validator-keys
-              key: validator5
+              key: validator3
         - name: APP_PROTOCOL_VERSION_KEY
           valueFrom:
             configMapKeyRef:
@@ -94,12 +96,12 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /data
-          name: validator-5-data
+          name: validator-3-data
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: acr-regcred
       nodeSelector:
-        beta.kubernetes.io/os: linux
+        node.kubernetes.io/instance-type: m6g.xlarge
       restartPolicy: Always
       volumes:
       - name: script-volume
@@ -114,7 +116,7 @@ spec:
   volumeClaimTemplates:
   - metadata:
       creationTimestamp: null
-      name: validator-5-data
+      name: validator-3-data
     spec:
       accessModes:
       - ReadWriteOnce
