@@ -320,9 +320,10 @@ data:
     [FILTER]
         Name                         rewrite_tag
         Match                        default_application.*
-        Rule                         $kubernetes['container_name'] remote-headless-99 test_loki.$TAG false
+        Rule                         $kubernetes['container_name'] remote-headless-99|remote-headless-31 test_loki.$TAG false
         Emitter_Name                 filter_test_loki
-        Emitter_Mem_Buf_Limit        20M
+        Emitter_Mem_Buf_Limit        200M
+        Emitter_Storage.type         filesystem
 
     [FILTER]
         Name                         rewrite_tag
@@ -363,9 +364,11 @@ data:
         Match                        test_loki.*
         host                         loki-gateway.monitoring.svc.cluster.local
         port                         80
-        labels                       job=fluentbit, src=$Source, tag=$Tag, subtag=$Subtag, container=$kubernetes['container_name']
+        labels                       job=fluentbit, tag=$Tag, subtag=$Subtag, container=$kubernetes['container_name']
         auto_kubernetes_labels       on
         line_format                  json
+        remove_keys                  log_processed
+        workers                      32
 
   dataplane-log.conf: |
     [INPUT]

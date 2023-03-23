@@ -105,6 +105,8 @@ spec:
           name: probe-script
           readOnly: true
           subPath: readiness_probe.sh
+        - mountPath: /app/logs
+          name: json-log
         env:
         - name: APP_PROTOCOL_VERSION_KEY
           valueFrom:
@@ -141,6 +143,10 @@ spec:
           defaultMode: 448
           name: probe-script
         name: probe-script
+      - hostPath:
+          path: /tmp/log
+          type: DirectoryOrCreate
+        name: json-log
   updateStrategy:
     type: OnDelete
   volumeClaimTemplates:
