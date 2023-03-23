@@ -60,7 +60,7 @@ spec:
         - --tx-life-time=10
         command:
         - dotnet
-        image: planetariumhq/ninechronicles-headless:v100372-1
+        image: planetariumhq/ninechronicles-headless:log-v100372-1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -131,7 +131,7 @@ spec:
           value: 'true'
       dnsPolicy: ClusterFirst
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-main-r6g-xl
+        alpha.eksctl.io/nodegroup-name: 9c-main-c7g-4xl
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler
