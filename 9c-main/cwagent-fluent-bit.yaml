@@ -268,6 +268,20 @@ data:
 
     [INPUT]
         Name                tail
+        Tag                 loki.*
+        Exclude_Path        /var/log/headless/log-*, /var/log/headless/metric-*
+        Path                /var/log/headless/*.json
+        Parser              docker
+        DB                  /var/fluent-bit/state/flb_loki.db
+        Mem_Buf_Limit       50MB
+        Skip_Long_Lines     On
+        Refresh_Interval    10
+        Rotate_Wait         30
+        storage.type        filesystem
+        Read_from_Head      ${READ_FROM_HEAD}
+
+    [INPUT]
+        Name                tail
         Tag                 application.*
         Path                /var/log/containers/fluent-bit*
         Parser              docker
@@ -304,6 +318,18 @@ data:
         Annotations         Off
 
     [FILTER]
+        Name                kubernetes
+        Match               loki.*
+        Kube_URL            https://kubernetes.default.svc:443
+        Kube_Tag_Prefix     loki.var.log.headless.
+        Regex_Parser        kube_json
+        Merge_Log           Off
+        K8S-Logging.Parser  On
+        K8S-Logging.Exclude Off
+        Labels              Off
+        Annotations         Off
+
+    [FILTER]
         Name                         parser
         Match                        application.*
         Key_Name                     log
@@ -316,13 +342,13 @@ data:
         Match                        application.*
         Rule                         $kubernetes['namespace_name'] default default_application.$TAG true
         Emitter_Name                 filter_default_namespace
+        Emitter_Storage.type         filesystem
 
     [FILTER]
         Name                         rewrite_tag
-        Match                        default_application.*
-        Rule                         $kubernetes['container_name'] remote-headless-99|remote-headless-31 test_loki.$TAG false
-        Emitter_Name                 filter_test_loki
-        Emitter_Mem_Buf_Limit        200M
+        Match                        loki.*
+        Rule                         $kubernetes['container_name'] remote-headless-99|remote-headless-31 loki_application.$TAG true
+        Emitter_Name                 filter_loki_application
         Emitter_Storage.type         filesystem
 
     [FILTER]
@@ -330,13 +356,6 @@ data:
         Match                        default_application.*
         Rule                         $log_level ^(?!DBG)\w+$ cwl.$TAG true
         Emitter_Name                 for_cloudwatch
-
-    [FILTER]
-        name          parser
-        Match         test_loki.*
-        Parser        docker
-        key_name      log
-        Reserve_Data  On
 
     [OUTPUT]
         Name                         cloudwatch_logs
@@ -361,13 +380,12 @@ data:
 
     [OUTPUT]
         Name                         loki
-        Match                        test_loki.*
+        Match                        loki_application.*
         host                         loki-gateway.monitoring.svc.cluster.local
         port                         80
         labels                       job=fluentbit, tag=$Tag, subtag=$Subtag, container=$kubernetes['container_name']
         auto_kubernetes_labels       on
         line_format                  json
-        remove_keys                  log_processed
         workers                      32
 
   dataplane-log.conf: |
@@ -482,6 +500,13 @@ data:
         Time_Format         %b %d %H:%M:%S
 
     [PARSER]
+        Name                kube_json
+        Format              regex
+        Regex               (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)_(?<pod_uid>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)\.json$
+        Time_Key            time
+        Time_Format         %Y-%m-%dT%H:%M:%S.%LZ
+
+    [PARSER]
         Name                container_firstline
         Format              regex
         Regex               (?<log>(?<="log":")\S(?!\.).*?)(?<!\\)".*(?<stream>(?<="stream":").*?)".*(?<time>\d{4}-\d{1,2}-\d{1,2}T\d{2}:\d{2}:\d{2}\.\w*).*(?=})
@@ -564,7 +589,7 @@ spec:
               value: "k8s/1.3.3"
         resources:
             limits:
-              memory: 200Mi
+              memory: 500Mi
             requests:
               cpu: 100m
               memory: 100Mi
