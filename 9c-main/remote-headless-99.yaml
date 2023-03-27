@@ -60,7 +60,7 @@ spec:
         - --tx-life-time=10
         command:
         - dotnet
-        image: planetariumhq/ninechronicles-headless:git-abe55c968b48cbb7459f2ec54a84c9a674a2d108
+        image: planetariumhq/ninechronicles-headless:v100380-1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
