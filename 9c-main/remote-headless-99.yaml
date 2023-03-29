@@ -60,7 +60,7 @@ spec:
         - --tx-life-time=10
         command:
         - dotnet
-        image: planetariumhq/ninechronicles-headless:v100380-2
+        image: planetariumhq/ninechronicles-headless:git-8756ea270070062dc6a1e0028117c4e176feb5db
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -105,6 +105,8 @@ spec:
           name: probe-script
           readOnly: true
           subPath: readiness_probe.sh
+        - mountPath: /app/logs
+          name: json-log
         env:
         - name: APP_PROTOCOL_VERSION_KEY
           valueFrom:
@@ -129,6 +131,16 @@ spec:
           value: remote-headless-99
         - name: IpRateLimiting__EnableRateLimiting
           value: 'true'
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: NAMESPACE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: JSON_LOG_PATH
+          value: "./logs/$(POD_NAME)_$(NAMESPACE_NAME)_remote-headless-99.json"
       dnsPolicy: ClusterFirst
       nodeSelector:
         alpha.eksctl.io/nodegroup-name: 9c-main-c7g-4xl
@@ -141,6 +153,10 @@ spec:
           defaultMode: 448
           name: probe-script
         name: probe-script
+      - hostPath:
+          path: /var/log/headless
+          type: DirectoryOrCreate
+        name: json-log
   updateStrategy:
     type: OnDelete
   volumeClaimTemplates:

@@ -502,7 +502,7 @@ data:
     [PARSER]
         Name                kube_json
         Format              regex
-        Regex               (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>.+)\.json$
+        Regex               (?<pod_name>[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*)_(?<namespace_name>[^_]+)_(?<container_name>[^_]+)(_[0-9]*)?\.json$
         Time_Key            time
         Time_Format         %Y-%m-%dT%H:%M:%S.%LZ
 
