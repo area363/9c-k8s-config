@@ -60,7 +60,7 @@ spec:
         - --tx-life-time=10
         command:
         - dotnet
-        image: planetariumhq/ninechronicles-headless:v100380-1
+        image: planetariumhq/ninechronicles-headless:v100380-2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -140,7 +140,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: JSON_LOG_PATH
-          value: "./logs/$(POD_NAME)_$(NAMESPACE_NAME)_remote-headless-31.json"
+          value: ./logs/$(POD_NAME)_$(NAMESPACE_NAME)_remote-headless-31.json
       dnsPolicy: ClusterFirst
       nodeSelector:
         alpha.eksctl.io/nodegroup-name: 9c-main-c7g-4xl
