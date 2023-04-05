@@ -44,8 +44,7 @@ deploy_cluster() {
   # Start remaining services
   echo "Start remaining services"
   kubectl apply  \
-    -f $BASEDIR/remote-headless-31.yaml \
-    -f $BASEDIR/remote-headless-99.yaml
+    -f $BASEDIR/remote-headless-31.yaml
 }
 
 echo "Checkout 9c-main cluster."
