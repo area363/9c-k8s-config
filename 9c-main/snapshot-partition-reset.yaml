@@ -53,7 +53,7 @@ spec:
             - $(CF_DISTRIBUTION_ID)
             command:
             - /bin/upload_snapshot.sh
-            image: planetariumhq/ninechronicles-snapshot:git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
+            image: planetariumhq/ninechronicles-snapshot:git-aaa36c4a632b7779b540a188f0c95c2cce619c15
             name: upload-snapshot1
             resources:
               requests:
@@ -92,7 +92,7 @@ spec:
             - $(CF_DISTRIBUTION_ID)
             command:
             - /bin/upload_snapshot.sh
-            image: planetariumhq/ninechronicles-snapshot:git-9af8f34a244a3c1ce1bcd16d12cf61807319b8d7
+            image: planetariumhq/ninechronicles-snapshot:git-aaa36c4a632b7779b540a188f0c95c2cce619c15
             name: upload-snapshot2
             resources:
               requests:
