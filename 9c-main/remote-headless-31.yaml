@@ -143,7 +143,7 @@ spec:
           value: ./logs/$(POD_NAME)_$(NAMESPACE_NAME)_remote-headless-31.json
       dnsPolicy: ClusterFirst
       nodeSelector:
-        alpha.eksctl.io/nodegroup-name: 9c-main-c7g-4xl
+        alpha.eksctl.io/nodegroup-name: 9c-main-r6g-xl
         beta.kubernetes.io/os: linux
       restartPolicy: Always
       schedulerName: default-scheduler
